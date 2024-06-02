@@ -41,6 +41,8 @@ interface Tile {
 
     isEdible(): boolean;
 
+    isPushable(): boolean;
+
     draw(g: CanvasRenderingContext2D, x: number, y: number): void;
 
 }
@@ -101,6 +103,10 @@ class Air implements Tile {
 
     isEdible(): boolean {
         return true;
+    }
+
+    isPushable(): boolean {
+        return false;
     }
 
 }
@@ -164,6 +170,10 @@ class Box implements Tile {
         return false;
     }
 
+    isPushable(): boolean {
+        return true;
+    }
+
 }
 
 class FallingBox implements Tile {
@@ -222,6 +232,10 @@ class FallingBox implements Tile {
     }
 
     isEdible(): boolean {
+        return false;
+    }
+
+    isPushable(): boolean {
         return false;
     }
 
@@ -286,6 +300,10 @@ class FallingStone implements Tile {
         return false;
     }
 
+    isPushable(): boolean {
+        return false;
+    }
+
 }
 
 class Flux implements Tile {
@@ -347,6 +365,10 @@ class Flux implements Tile {
         return true;
     }
 
+    isPushable(): boolean {
+        return false;
+    }
+
 }
 
 class Key1 implements Tile {
@@ -405,6 +427,10 @@ class Key1 implements Tile {
     }
 
     isEdible(): boolean {
+        return false;
+    }
+
+    isPushable(): boolean {
         return false;
     }
 
@@ -469,6 +495,10 @@ class Key2 implements Tile {
         return false;
     }
 
+    isPushable(): boolean {
+        return false;
+    }
+
 }
 
 class Lock1 implements Tile {
@@ -527,6 +557,10 @@ class Lock1 implements Tile {
     }
 
     isEdible(): boolean {
+        return false;
+    }
+
+    isPushable(): boolean {
         return false;
     }
 
@@ -591,6 +625,10 @@ class Lock2 implements Tile {
         return false;
     }
 
+    isPushable(): boolean {
+        return false;
+    }
+
 }
 
 class Player implements Tile {
@@ -648,6 +686,10 @@ class Player implements Tile {
     }
 
     isEdible(): boolean {
+        return false;
+    }
+
+    isPushable(): boolean {
         return false;
     }
 
@@ -712,6 +754,10 @@ class Stone implements Tile {
         return false;
     }
 
+    isPushable(): boolean {
+        return true;
+    }
+
 }
 
 class Unbreakable implements Tile {
@@ -770,6 +816,10 @@ class Unbreakable implements Tile {
     }
 
     isEdible(): boolean {
+        return false;
+    }
+
+    isPushable(): boolean {
         return false;
     }
 
@@ -956,8 +1006,7 @@ function moveToTile(newx: number, newy: number) {
 function moveHorizontal(dx: number) {
     if (map[playery][playerx + dx].isEdible()) {
         moveToTile(playerx + dx, playery);
-    } else if ((map[playery][playerx + dx].isStone()
-            || map[playery][playerx + dx].isBox())
+    } else if (map[playery][playerx + dx].isPushable()
         && map[playery][playerx + dx + dx].isAir()
         && !map[playery + 1][playerx + dx].isAir()) {
         map[playery][playerx + dx + dx] = map[playery][playerx + dx];
